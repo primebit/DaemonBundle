@@ -1,0 +1,129 @@
+<?php
+namespace Hq\DaemonsBundle\Entity;
+
+use Doctrine\ORM\Mapping AS ORM;
+
+/** 
+ * @ORM\Entity
+ * @ORM\Table(name="daemons.daemons_messages_types")
+ */
+class DaemonMessageType
+{
+    /** 
+     * @ORM\Id
+     * @ORM\Column(type="smallint")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /** 
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /** 
+     * @ORM\Column(type="text", nullable=false)
+     */
+    private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DaemonMessage", mappedBy="type", cascade="remove")
+     */
+    private $messages;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return DaemonMessageType
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return DaemonMessageType
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add messages
+     *
+     * @param \Hq\DaemonsBundle\Entity\DaemonMessage $messages
+     * @return DaemonMessageType
+     */
+    public function addMessage(\Hq\DaemonsBundle\Entity\DaemonMessage $messages)
+    {
+        $this->messages[] = $messages;
+    
+        return $this;
+    }
+
+    /**
+     * Remove messages
+     *
+     * @param \Hq\DaemonsBundle\Entity\DaemonMessage $messages
+     */
+    public function removeMessage(\Hq\DaemonsBundle\Entity\DaemonMessage $messages)
+    {
+        $this->messages->removeElement($messages);
+    }
+
+    /**
+     * Get messages
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getMessages()
+    {
+        return $this->messages;
+    }
+}

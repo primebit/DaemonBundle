@@ -1,0 +1,101 @@
+<?php
+namespace Hq\DaemonsBundle\Entity;
+
+use Doctrine\ORM\Mapping AS ORM;
+
+/** 
+ * @ORM\Entity
+ * @ORM\Table(name="daemons.daemons_sessions_statuses")
+ */
+class DaemonSessionStatus
+{
+    /** 
+     * @ORM\Id
+     * @ORM\Column(type="smallint")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /** 
+     * @ORM\Column(type="string", length=255, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="DaemonSession", mappedBy="status", cascade="remove")
+     */
+    private $sessions;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return DaemonSessionStatus
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->sessions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add sessions
+     *
+     * @param \Hq\DaemonsBundle\Entity\DaemonSession $sessions
+     * @return DaemonSessionStatus
+     */
+    public function addSession(\Hq\DaemonsBundle\Entity\DaemonSession $sessions)
+    {
+        $this->sessions[] = $sessions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove sessions
+     *
+     * @param \Hq\DaemonsBundle\Entity\DaemonSession $sessions
+     */
+    public function removeSession(\Hq\DaemonsBundle\Entity\DaemonSession $sessions)
+    {
+        $this->sessions->removeElement($sessions);
+    }
+
+    /**
+     * Get sessions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSessions()
+    {
+        return $this->sessions;
+    }
+}

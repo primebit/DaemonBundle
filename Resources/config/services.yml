@@ -1,0 +1,7 @@
+parameters:
+#    hq_daemons.example.class: Hq\DaemonsBundle\Example
+
+services:
+#    hq_daemons.example:
+#        class: %hq_daemons.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
